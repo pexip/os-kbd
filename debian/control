@@ -1,0 +1,32 @@
+Source: kbd
+Section: utils
+Priority: extra
+Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
+XSBC-Original-Maintainer: Console utilities maintainers <pkg-kbd-devel@lists.alioth.debian.org>
+Uploaders: Michael Schutte <michi@debian.org>, Anton Zinoviev <zinoviev@debian.org>
+Build-Depends: debhelper (>= 8.1.0), autoconf, automake, linuxdoc-tools, gettext:any, flex, bison
+Standards-Version: 3.9.2
+Vcs-Git: git://git.debian.org/git/pkg-kbd/kbd.git
+Vcs-Browser: http://git.debian.org/?p=pkg-kbd/kbd.git
+
+Package: kbd
+Architecture: any
+Pre-Depends: ${misc:Pre-Depends}
+Depends: ${shlibs:Depends}, ${misc:Depends}, console-setup, lsb-base (>= 3.0-10), initramfs-tools
+Provides: console-utilities, open
+Conflicts: console-utilities, kbd-data, open
+Breaks: util-linux (<< 2.11)
+Replaces: open, util-linux (<< 2.11)
+Description: Linux console font and keytable utilities
+ This package allows you to set up the Linux console, change the font,
+ resize text mode virtual consoles and remap the keyboard.
+ .
+ You will probably want to install a set of data files, such as the one
+ in the “console-setup” package.
+
+Package: kbd-udeb
+Package-Type: udeb
+Section: debian-installer
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: Linux console keyboard setup utilities

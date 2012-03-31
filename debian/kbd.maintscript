@@ -1,0 +1,5 @@
+# remove unused conffiles
+rm_conffile /etc/init.d/console-screen.kbd.sh
+rm_conffile /etc/init.d/kbd
+
+#DEBHELPER#

@@ -1,0 +1,6 @@
+fixes/kbd_mode.diff -p1
+fixes/manpages.diff -p1
+fixes/openvt_error_handling.diff -p1
+fixes/unicode_start_breaks_X.diff -p1
+fixes/compose_as_usual.diff -p1
+debian-changes-1.15.2-3ubuntu1
