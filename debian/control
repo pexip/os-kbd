@@ -1,13 +1,15 @@
 Source: kbd
 Section: utils
 Priority: extra
-Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
+Maintainer: Pexip AS <packaging@pexip.com>
+XSBC-Pexip-Original-Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
 XSBC-Original-Maintainer: Console utilities maintainers <pkg-kbd-devel@lists.alioth.debian.org>
-Uploaders: Michael Schutte <michi@debian.org>, Anton Zinoviev <zinoviev@debian.org>
+XSBC-Pexip-Original-Uploaders: Michael Schutte <michi@debian.org>, Anton Zinoviev <zinoviev@debian.org>
 Build-Depends: debhelper (>= 8.1.0), autoconf, automake, linuxdoc-tools, gettext:any, flex, bison
 Standards-Version: 3.9.2
 Vcs-Git: git://git.debian.org/git/pkg-kbd/kbd.git
 Vcs-Browser: http://git.debian.org/?p=pkg-kbd/kbd.git
+XS-Pexip-Upstream: http://archive.ubuntu.com/ubuntu/ precise
 
 Package: kbd
 Architecture: any
