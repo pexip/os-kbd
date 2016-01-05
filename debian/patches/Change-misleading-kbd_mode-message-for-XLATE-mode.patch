@@ -1,0 +1,34 @@
+From: Michael Schutte <michi@debian.org>
+Date: Thu, 10 Dec 2015 20:31:03 +0100
+Subject: Change misleading kbd_mode message for XLATE mode
+
+Bug-Debian: http://bugs.debian.org/546712
+Forwarded: no
+
+The text said "default (ASCII) mode", which is wrong in two respects:
+XLATE isn't limited to 7-bit ASCII, but works with various 8-bit
+charsets, and the XLATE mode hasn't been the kernel default for a while.
+Thanks for the hint go to Samuel Thibault <sthibault@debian.org>.
+
+The usage of kbd_mode together with grep in shell scripts might become
+an issue with this commit, though cursory research with
+codesearch.google.com shows only the BiCon project
+<http://sourceforge.net/projects/bicon/>, which does "kbd_mode | grep -q
+-i Unicode" and is thus unaffected.
+---
+ src/kbd_mode.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/kbd_mode.c b/src/kbd_mode.c
+index b45ffdf..f654d8e 100644
+--- a/src/kbd_mode.c
++++ b/src/kbd_mode.c
+@@ -88,7 +88,7 @@ main(int argc, char *argv[]){
+ 		printf(_("The keyboard is in mediumraw (keycode) mode\n"));
+ 		break;
+ 	      case K_XLATE:
+-		printf(_("The keyboard is in the default (ASCII) mode\n"));
++		printf(_("The keyboard is in xlate (8-bit) mode\n"));
+ 		break;
+ 	      case K_UNICODE:
+ 		printf(_("The keyboard is in Unicode (UTF-8) mode\n"));

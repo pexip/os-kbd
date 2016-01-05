@@ -1,3 +1,73 @@
+kbd (2.0.3-2) unstable; urgency=medium
+
+  * Team upload.
+  * Stop shipping /etc/init.d/kbd and /etc/kbd/* (Closes: #796583)
+  * Drop kbd init script and /etc/kbd/* if unused
+  * Add debian/NEWS entry for kbd init removal
+  * Add myself to Uploaders
+  * Add myself to debian/copyright for debian/*
+  * Stop shipping obsolete /etc/kbd & /etc/init.d dirs
+  * Add/ship an example vcstime.service
+
+ -- Andreas Henriksson <andreas@fatal.se>  Tue, 05 Jan 2016 17:55:55 +0100
+
+kbd (2.0.3-1) unstable; urgency=medium
+
+  * Team upload.
+
+  [ Andreas Henriksson ]
+  * Add debian/gbp.conf
+  * Imported Upstream version 2.0.3 (Closes: #805314)
+  * Update debian/patches/manpages.diff to use new path
+    - upstream moved manpages from ./man/ to ./docs/man/
+  * Have quilt refresh debian/patches/openvt.diff
+  * Drop debian/patches/loadkeys_flex_stack.diff
+    - now part of upstream release
+  * Update debian/patches/dead2.diff to apply
+    - patch src/libkeymap where relevant code has been relocated
+    - update context of patches to make them apply after upstream changes
+  * Change debian/patches/dead2.diff to use new helpers
+    - use helper functions to follow upstream code style in libkeymap
+  * debian/rules: update cleanup of generated files
+    - upstream changed which files are generated, adapt to it.
+  * Add build-dependency on pkg-config + check
+  * Add debian/patches/0001-add-configure-flag-to-disable-tests.patch
+    - cherry-pick fix from upstream git
+  * debian/rules: update build target for libkeymap -Os build
+  * Update debian/rules for man moving to docs/man
+  * Update debian/kbd.docs for doc moving to docs/doc
+  * Update debian/rules for doc move to docs/doc
+  * Update debian/kbd.manpages for man move to docs/man
+  * debian/control: Add Homepage field
+  * Add debian/missing-sources/jquery.js
+  * Improve/update debian/copyright
+  * kbd.init: make initial whitespace on comment lines optional
+  * kbd.init: only parse logind.conf if we're running systemd
+  * kbd.init: don't assume /etc/inittab always exists
+  * debian/kbd.init: run setterm against /dev/tty1 under systemd.
+    Thanks to Andreas Trottmann (Closes: #771161)
+  * debian/gbp.conf: disable patch-numbers in gbp pq
+  * Have gbp pq import && gbp pq export rename patches
+    - debian/patches/kbd_mode.diff =>
+      debian/patches/Change-misleading-kbd_mode-message-for-XLATE-mode.patch
+    - debian/patches/manpages.diff =>
+      debian/patches/Miscellaneous-manpage-corrections-and-additions.patch
+    - debian/patches/openvt.diff =>
+      debian/patches/Various-fixes-to-the-openvt-utility.patch
+    - debian/patches/unicode_start_breaks_X.diff =>
+      debian/patches/Check-for-X-in-kbd_mode.patch
+    - debian/patches/dead2.diff =>
+      debian/patches/Support-KT_DEAD2-diacritics.patch
+    - debian/patches/0001-add-configure-flag-to-disable-tests.patch =>
+      debian/patches/add-configure-flag-to-disable-tests.patch
+  * debian/patches/*: Add back Forwarded / Bug-Debian meta-headers
+  * debian/patches/*: description in plain ascii to avoid extra headers
+
+  [ Marco d'Itri ]
+  * files with the same name installed in / and /usr (Closes: #767922)
+
+ -- Andreas Henriksson <andreas@fatal.se>  Wed, 16 Dec 2015 11:21:18 +0100
+
 kbd (1.15.5-2) unstable; urgency=medium
 
   * Not updating to the new upstream version 2.0.2, as it contains major
