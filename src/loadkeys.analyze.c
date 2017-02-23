@@ -1,6 +1,5 @@
-#line 2 "analyze.c"
 
-#line 4 "analyze.c"
+#line 3 "loadkeys.analyze.c"
 
 #define  YY_INT_ALIGNED short int
 
@@ -9,7 +8,7 @@
 #define FLEX_SCANNER
 #define YY_FLEX_MAJOR_VERSION 2
 #define YY_FLEX_MINOR_VERSION 5
-#define YY_FLEX_SUBMINOR_VERSION 35
+#define YY_FLEX_SUBMINOR_VERSION 37
 #if YY_FLEX_SUBMINOR_VERSION > 0
 #define FLEX_BETA
 #endif
@@ -119,6 +118,22 @@ typedef unsigned int flex_uint32_t;
  */
 #define YY_SC_TO_UI(c) ((unsigned int) (unsigned char) c)
 
+#ifndef YY_GNUC_PREREQ
+# if defined __GNUC__ && defined __GNUC_MINOR__
+#  define YY_GNUC_PREREQ(maj, min) \
+	((__GNUC__ << 16) + __GNUC_MINOR__ >= ((maj) << 16) + (min))
+# else
+#  define YY_GNUC_PREREQ(maj, min) 0
+# endif
+# if YY_GNUC_PREREQ(2, 5)
+#  define YY_ATTRIBUTE_NORETURN __attribute__ ((__noreturn__))
+#  define YY_ATTRIBUTE_UNUSED __attribute__ ((__unused__))
+# else
+#  define YY_ATTRIBUTE_NORETURN /* __attribute__ ((__noreturn__)) */
+#  define YY_ATTRIBUTE_UNUSED /* __attribute__ ((__unused__)) */
+# endif
+#endif
+
 /* Enter a start condition.  This macro really ought to take a parameter,
  * but we do it the disgusting crufty way forced on us by the ()-less
  * definition of BEGIN.
@@ -142,15 +157,7 @@ typedef unsigned int flex_uint32_t;
 
 /* Size of default input buffer. */
 #ifndef YY_BUF_SIZE
-#ifdef __ia64__
-/* On IA-64, the buffer size is 16k, not 8k.
- * Moreover, YY_BUF_SIZE is 2*YY_READ_BUF_SIZE in the general case.
- * Ditto for the __ia64__ case accordingly.
- */
-#define YY_BUF_SIZE 32768
-#else
 #define YY_BUF_SIZE 16384
-#endif /* __ia64__ */
 #endif
 
 /* The state buf must be large enough to hold one state per character in the main buffer.
@@ -162,7 +169,12 @@ typedef unsigned int flex_uint32_t;
 typedef struct yy_buffer_state *YY_BUFFER_STATE;
 #endif
 
-extern int yyleng;
+#ifndef YY_TYPEDEF_YY_SIZE_T
+#define YY_TYPEDEF_YY_SIZE_T
+typedef size_t yy_size_t;
+#endif
+
+extern yy_size_t yyleng;
 
 extern FILE *yyin, *yyout;
 
@@ -188,11 +200,6 @@ extern FILE *yyin, *yyout;
 
 #define unput(c) yyunput( c, (yytext_ptr)  )
 
-#ifndef YY_TYPEDEF_YY_SIZE_T
-#define YY_TYPEDEF_YY_SIZE_T
-typedef size_t yy_size_t;
-#endif
-
 #ifndef YY_STRUCT_YY_BUFFER_STATE
 #define YY_STRUCT_YY_BUFFER_STATE
 struct yy_buffer_state
@@ -210,7 +217,7 @@ struct yy_buffer_state
 	/* Number of characters read into yy_ch_buf, not including EOB
 	 * characters.
 	 */
-	int yy_n_chars;
+	yy_size_t yy_n_chars;
 
 	/* Whether we "own" the buffer - i.e., we know we created it,
 	 * and can realloc() it to grow it, and should free() it to
@@ -280,8 +287,8 @@ static YY_BUFFER_STATE * yy_buffer_stack = 0; /**< Stack as an array. */
 
 /* yy_hold_char holds the character lost when yytext is formed. */
 static char yy_hold_char;
-static int yy_n_chars;		/* number of characters read into yy_ch_buf */
-int yyleng;
+static yy_size_t yy_n_chars;		/* number of characters read into yy_ch_buf */
+yy_size_t yyleng;
 
 /* Points to current character in buffer. */
 static char *yy_c_buf_p = (char *) 0;
@@ -309,7 +316,7 @@ static void yy_init_buffer (YY_BUFFER_STATE b,FILE *file  );
 
 YY_BUFFER_STATE yy_scan_buffer (char *base,yy_size_t size  );
 YY_BUFFER_STATE yy_scan_string (yyconst char *yy_str  );
-YY_BUFFER_STATE yy_scan_bytes (yyconst char *bytes,int len  );
+YY_BUFFER_STATE yy_scan_bytes (yyconst char *bytes,yy_size_t len  );
 
 void *yyalloc (yy_size_t  );
 void *yyrealloc (void *,yy_size_t  );
@@ -341,6 +348,9 @@ void yyfree (void *  );
 
 /* Begin user sect3 */
 
+#define yywrap() 1
+#define YY_SKIP_YYWRAP
+
 typedef unsigned char YY_CHAR;
 
 FILE *yyin = (FILE *) 0, *yyout = (FILE *) 0;
@@ -357,7 +367,7 @@ extern char *yytext;
 static yy_state_type yy_get_previous_state (void );
 static yy_state_type yy_try_NUL_trans (yy_state_type current_state  );
 static int yy_get_next_buffer (void );
-static void yy_fatal_error (yyconst char msg[]  );
+static void yy_fatal_error (yyconst char msg[]  ) YY_ATTRIBUTE_NORETURN;
 
 /* Done after the current pattern has been matched and before the
  * corresponding action - sets up yytext.
@@ -381,61 +391,61 @@ struct yy_trans_info
 static yyconst flex_int16_t yy_accept[504] =
     {   0,
         0,    0,    0,    0,   45,   45,    0,    0,   49,   47,
-        6,    5,   47,   40,   47,   11,   10,    9,   13,   13,
+        6,    5,   47,   40,   47,   16,   15,   14,   12,   12,
         8,   47,   47,   47,   47,   47,   47,   47,   47,   47,
        47,   47,   47,   47,   47,   47,   47,   47,   47,   47,
-       47,   14,   14,   14,   14,   14,   14,   14,   14,   14,
-       14,   14,   14,   14,   14,   14,   14,   14,   14,   14,
-       14,   45,   46,   48,    3,   48,    6,    0,    7,    0,
-        0,   13,    0,   13,    0,   32,    0,    0,    0,    0,
+       47,   13,   13,   13,   13,   13,   13,   13,   13,   13,
+       13,   13,   13,   13,   13,   13,   13,   13,   13,   13,
+       13,   45,   46,   48,    3,   48,    6,    0,    7,    0,
+        0,   12,    0,   12,    0,   33,    0,    0,    0,    0,
         0,    0,    0,    0,    0,    0,    0,    0,    0,   35,
-        0,    0,    0,    0,    0,    0,   34,    0,    0,    0,
+        0,    0,    0,    0,    0,    0,   10,    0,    0,    0,
 
         4,    0,    0,    0,    0,    0,    0,    0,    0,    0,
-        0,    0,    0,    0,   14,   14,   14,   14,   14,   14,
-       14,   14,   14,   14,   14,   14,   14,   14,   14,   14,
-       14,   14,   14,   14,   14,   14,   14,   14,   14,   14,
-       14,   14,   14,   14,   14,   14,   14,   14,   14,   14,
-       14,   14,   14,   45,   42,   41,   43,   44,    0,    3,
-       39,    0,   39,    0,   13,   22,    0,   22,    0,    0,
+        0,    0,    0,    0,   13,   13,   13,   13,   13,   13,
+       13,   13,   13,   13,   13,   13,   13,   13,   13,   13,
+       13,   13,   13,   13,   13,   13,   13,   10,   13,   13,
+       13,   13,   13,   13,   13,   13,   13,   13,   13,   13,
+       13,   13,   13,   45,   42,   41,   43,   44,    0,    3,
+       39,    0,   39,    0,   12,   23,    0,   23,    0,    0,
         0,    0,    0,    0,    0,    0,    0,    0,   36,    0,
         0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
-       22,    0,    0,    0,    0,    0,    0,    0,    0,    0,
+       23,    0,    0,    0,    0,    0,    0,    0,    0,    0,
 
-        0,    0,   14,   14,   14,   14,   14,   14,   14,   14,
-       14,   14,   14,   14,   14,   14,   14,   14,   14,   14,
-       14,   14,   14,   14,   14,   14,   14,   14,   14,   14,
-       14,   14,   14,   14,   14,   14,   14,   14,   41,    2,
+        0,    0,   13,   13,   13,   13,   13,   13,   13,   13,
+       13,   13,   13,   13,   13,   13,   13,   13,   13,   13,
+       13,   13,   13,   13,   13,   13,   13,   13,   13,   13,
+       13,   13,   13,   13,   13,   13,   13,   13,   41,    2,
        38,   37,    0,    0,    0,    0,    0,    0,    0,    0,
         0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
         0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
         0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
-        0,    0,    0,    0,    0,   14,   14,   14,   14,   14,
-       14,   14,   14,   14,   14,   14,   14,   14,   14,   14,
+        0,    0,    0,    0,    0,   13,   13,   13,   13,   13,
+       13,   13,   13,   13,   13,   13,   13,   13,   13,   13,
 
-       14,   14,   14,   14,   14,   14,   14,   14,   14,   14,
-       14,   14,   14,   14,   14,   14,   14,   14,   14,   14,
-       14,   14,   14,   14,   14,   14,   41,   37,    0,    0,
-       23,    0,    0,    0,    0,   26,   27,    0,    0,    0,
-        0,    0,    0,    0,    0,    0,    0,    0,    0,   19,
-       20,    0,   20,    0,    0,   33,    0,    0,    0,    0,
-        0,    0,    0,   20,    0,   14,   14,   14,   14,   14,
-       14,   14,   14,   14,   14,   14,   14,   14,   14,   14,
-       14,   14,   14,   14,   14,   14,   14,   14,   14,   14,
-       14,   14,   14,   14,   14,   14,   14,   14,   14,   14,
+       13,   13,   13,   13,   13,   13,   13,   13,   13,   13,
+       13,   13,   13,   13,   13,   13,   13,   13,   13,   13,
+       13,   13,   13,   13,   13,   13,   41,   37,    0,    0,
+       24,    0,    0,    0,    0,   27,   28,    0,    0,    0,
+        0,    0,    0,    0,    0,    0,    0,    0,    0,   20,
+       21,    0,   21,    0,    0,   34,    0,    0,    0,    0,
+        0,    0,    0,   21,    0,   13,   13,   13,   13,   13,
+       13,   13,   13,   13,   13,   13,   13,   13,   13,   13,
+       13,   13,   13,   13,   13,   13,   13,   13,   13,   13,
+       13,   13,   13,   13,   13,   13,   13,   13,   13,   13,
 
         0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
-        0,    0,    0,    0,    0,    0,    0,   24,   25,   18,
-       18,   12,    0,    0,    0,    0,    0,    0,    0,   18,
-       14,   14,   14,   14,   14,   14,   14,   14,   14,   14,
-       14,   14,   14,   14,   14,   14,   14,   14,   14,   14,
-       14,   14,   14,   14,   14,   14,   14,   14,   14,    0,
-        0,   15,   31,   21,    0,    0,   17,   16,   30,    0,
-        1,   14,   14,   14,   14,   14,   14,   14,   14,   14,
-       14,   14,    1,    0,    0,    0,    0,    0,    1,   14,
-       14,   14,   14,   14,    0,   28,   14,   14,    0,   14,
+        0,    0,    0,    0,    0,    0,    0,   25,   26,    9,
+        9,   11,    0,    0,    0,    0,    0,    0,    0,    9,
+       13,   13,   13,   13,   13,   13,   13,   13,   13,   13,
+       13,   13,   13,   13,   13,   13,   13,   13,   13,    9,
+        9,   13,   13,   13,   13,   13,   13,   13,    9,    0,
+        0,   17,   32,   22,    0,    0,   19,   18,   31,    0,
+        1,   13,   13,   13,   13,   13,   13,   13,   13,   13,
+       13,   13,    1,    0,    0,    0,    0,    0,    1,   13,
+       13,   13,   13,   13,    0,   29,   13,   13,    0,   13,
 
-       29,   14,    0
+       30,   13,    0
     } ;
 
 static yyconst flex_int32_t yy_ec[256] =
@@ -796,37 +806,255 @@ int yy_flex_debug = 0;
 #define YY_MORE_ADJ 0
 #define YY_RESTORE_YY_MORE_OFFSET
 char *yytext;
-#line 1 "analyze.l"
-#line 4 "analyze.l"
+#line 1 "loadkeys.analyze.l"
+#define YY_NO_INPUT 1
+#line 7 "loadkeys.analyze.l"
 #define YY_NO_INPUT 1
 
 #include <stdlib.h>
+#include <unistd.h> /* readlink */
+#include <sys/param.h>
 #include <linux/kd.h>
+#include <linux/keyboard.h>
+
 #include "ksyms.h"
+#include "nls.h"
 #include "kbd.h"
+#include "paths.h"
 #include "xmalloc.h"
-#ifdef __klibc__
-#include "klibc_compat.h"
-#endif
+#include "findfile.h"
+#include "loadkeys.h"
 
-extern int line_nr;
-int	yylval;
-int	rvalct;
+int rvalct;
 struct kbsentry kbs_buf;
-char *p, *pmax;
-char *filename;
+static char *p, *pmax;
 
-#undef yywrap
-extern int yywrap(void);
+extern int verbose;
 extern int yyerror(const char *s);
-extern void stringovfl(void);
-extern void lkfatal(const char *s);
-extern void lkfatal1(const char *s, const char *s2);
-extern void open_include(char *s);
+extern void lkfatal(const char *fmt, ...);
+
+void stack_push(FILE *fd, int is_pipe, char *fname);
+
+/* Include file handling - unfortunately flex-specific. */
+#define MAX_INCLUDE_DEPTH 20
+static struct infile {
+	FILE *fd;
+	char *filename;
+	int  pipe;
+	int  linenr;
+	YY_BUFFER_STATE buffer;
+} infile_stack[MAX_INCLUDE_DEPTH];
+
+char *filename = NULL;
+int  line_nr = 1;
+
+static int infile_stack_ptr = -1;
+static int state_ptr = 0;
+
+void stack_push(FILE *fd, int is_pipe, char *fname) {
+	if (infile_stack_ptr >= MAX_INCLUDE_DEPTH)
+		lkfatal(_("includes are nested too deeply"));
+
+	infile_stack_ptr++;
+
+	infile_stack[infile_stack_ptr].buffer   = yy_create_buffer(fd,YY_BUF_SIZE);
+	infile_stack[infile_stack_ptr].fd       = fd;
+	infile_stack[infile_stack_ptr].pipe     = is_pipe;
+	infile_stack[infile_stack_ptr].filename = strdup(fname);
+	infile_stack[infile_stack_ptr].linenr   = line_nr;
+
+	yy_switch_to_buffer(infile_stack[infile_stack_ptr].buffer);
+
+	// Set global variables
+	filename = infile_stack[infile_stack_ptr].filename;
+	line_nr  = 1;
+}
+
+static int stack_pop(void) {
+	fpclose1(infile_stack[infile_stack_ptr].fd, infile_stack[infile_stack_ptr].pipe);
+
+	// Free previous filename
+	xfree(infile_stack[infile_stack_ptr].filename);
+
+	// Destroy previous buffer
+	yy_delete_buffer(infile_stack[infile_stack_ptr].buffer);
+
+	infile_stack_ptr--;
+
+	if (infile_stack_ptr >= 0) {
+		// Set new state
+		//yyin     = infile_stack[infile_stack_ptr].fd; // ???
+		ispipe   = infile_stack[infile_stack_ptr].pipe;
+		filename = infile_stack[infile_stack_ptr].filename;
+		line_nr  = infile_stack[infile_stack_ptr].linenr;
+
+		// Switch to new buffer
+		yy_switch_to_buffer(infile_stack[infile_stack_ptr].buffer);
+		return 0;
+	}
+
+	return 1;
+}
+
+/*
+ * Where shall we look for an include file?
+ * Current strategy (undocumented, may change):
+ *
+ * 1. Look for a user-specified LOADKEYS_INCLUDE_PATH
+ * 2. Try . and ../include and ../../include
+ * 3. Try D and D/../include and D/../../include
+ *    where D is the directory from where we are loading the current file.
+ * 4. Try KD/include and KD/#/include where KD = DATADIR/KEYMAPDIR.
+ *
+ * Expected layout:
+ * KD has subdirectories amiga, atari, i386, mac, sun, include
+ * KD/include contains architecture-independent stuff
+ * like strings and iso-8859-x compose tables.
+ * KD/i386 has subdirectories qwerty, ... and include;
+ * this latter include dir contains stuff with keycode=...
+ *
+ * (Of course, if the present setup turns out to be reasonable,
+ * then later also the other architectures will grow and get
+ * subdirectories, and the hard-coded i386 below will go again.)
+ *
+ * People that dislike a dozen lookups for loadkeys
+ * can easily do "loadkeys file_with_includes; dumpkeys > my_keymap"
+ * and afterwards use only "loadkeys /fullpath/mykeymap", where no
+ * lookups are required.
+ */
+static char *include_dirpath0[] = { "", 0 };
+static char *include_dirpath1[] = { "", "../include/", "../../include/", 0 };
+static char *include_dirpath2[] = { 0, 0, 0, 0 };
+static char *include_dirpath3[] = {
+	DATADIR "/" KEYMAPDIR "/include/",
+	DATADIR "/" KEYMAPDIR "/i386/include/",
+	DATADIR "/" KEYMAPDIR "/mac/include/", 0
+};
+
+static char *include_suffixes[] = { "", ".inc", 0 };
+
+static FILE *find_incl_file_near_fn(char *s, char *fn)
+{
+	FILE *f = NULL;
+	char *t, *te, *t1, *t2;
+	int len;
+
+	if (!fn)
+		return NULL;
+
+	t = xstrdup(fn);
+	te = strrchr(t, '/');
+	if (te) {
+		te[1] = 0;
+		len = strlen(t);
+		include_dirpath2[0] = t;
+		include_dirpath2[1] = t1 = xmalloc(len + 12);
+		include_dirpath2[2] = t2 = xmalloc(len + 15);
+		strcpy(t1, t);
+		strcat(t1, "../include/");
+		strcpy(t2, t);
+		strcat(t2, "../../include/");
+		f = findfile(s, include_dirpath2, include_suffixes);
+		xfree(t1);
+		xfree(t2);
+	}
+	xfree(t);
+	return f;
+}
+
+static FILE *find_standard_incl_file(char *s)
+{
+	FILE *f;
+
+	f = findfile(s, include_dirpath1, include_suffixes);
+	if (!f)
+		f = find_incl_file_near_fn(s, filename);
+
+	/* If filename is a symlink, also look near its target. */
+	if (!f) {
+		char buf[MAXPATHLEN], path[MAXPATHLEN], *ptr;
+		unsigned int n;
+
+		n = readlink(filename, buf, sizeof(buf));
+		if (n > 0 && n < sizeof(buf)) {
+			buf[n] = 0;
+			if (buf[0] == '/') {
+				f = find_incl_file_near_fn(s, buf);
+
+			} else if (strlen(filename) + n < sizeof(path)) {
+				strcpy(path, filename);
+				path[sizeof(path) - 1] = 0;
+				ptr = strrchr(path, '/');
+				if (ptr)
+					ptr[1] = 0;
+				strcat(path, buf);
+				f = find_incl_file_near_fn(s, path);
+			}
+		}
+	}
+
+	if (!f)
+		f = findfile(s, include_dirpath3, include_suffixes);
+	return f;
+}
+
+static FILE *find_incl_file(char *s)
+{
+	FILE *f;
+	char *ev;
+
+	if (!s || !*s)
+		return NULL;
+
+	if (*s == '/')		/* no path required */
+		return (findfile(s, include_dirpath0, include_suffixes));
+
+	if ((ev = getenv("LOADKEYS_INCLUDE_PATH")) != NULL) {
+		/* try user-specified path */
+		char *user_dir[2] = { 0, 0 };
+		while (ev) {
+			char *t = strchr(ev, ':');
+			char sv = 0;
+			if (t) {
+				sv = *t;
+				*t = 0;
+			}
+			user_dir[0] = ev;
+			if (*ev)
+				f = findfile(s, user_dir, include_suffixes);
+			else	/* empty string denotes system path */
+				f = find_standard_incl_file(s);
+			if (f)
+				return f;
+			if (t)
+				*t++ = sv;
+			ev = t;
+		}
+		return NULL;
+	}
+	return find_standard_incl_file(s);
+}
+
+static void open_include(char *s)
+{
+	FILE *fd;
+
+	if (verbose)
+		fprintf(stdout, _("switching to %s\n"), s);
+
+	fd = find_incl_file(s);
+	if (!fd)
+		lkfatal(_("cannot open include file %s"), s);
+
+	xfree(s);
+
+	stack_push(fd, ispipe, pathname);
+}
 
 
 
-#line 827 "analyze.c"
+
+#line 1058 "loadkeys.analyze.c"
 
 #define INITIAL 0
 #define RVALUE 1
@@ -868,7 +1096,7 @@ FILE *yyget_out (void );
 
 void yyset_out  (FILE * out_str  );
 
-int yyget_leng (void );
+yy_size_t yyget_leng (void );
 
 char *yyget_text (void );
 
@@ -906,14 +1134,17 @@ static int input (void );
 
 #endif
 
+        static int yy_start_stack_ptr = 0;
+        static int yy_start_stack_depth = 0;
+        static int *yy_start_stack = NULL;
+    
+    static void yy_push_state (int new_state );
+    
+    static void yy_pop_state (void );
+    
 /* Amount of stuff to slurp up with each read. */
 #ifndef YY_READ_BUF_SIZE
-#ifdef __ia64__
-/* On IA-64, the buffer size is 16k, not 8k */
-#define YY_READ_BUF_SIZE 16384
-#else
 #define YY_READ_BUF_SIZE 8192
-#endif /* __ia64__ */
 #endif
 
 /* Copy whatever the last rule matched to the standard output. */
@@ -1014,7 +1245,7 @@ YY_DECL
 	register char *yy_cp, *yy_bp;
 	register int yy_act;
     
-#line 65 "analyze.l"
+#line 287 "loadkeys.analyze.l"
 
 
 /* To protect from wrong code in the higher level parser (loadkeys.y), 
@@ -1029,7 +1260,8 @@ YY_DECL
  * yylval to YYLVAL_UNDEF. Then it might be overwritten by specific rules. */
   yylval = YYLVAL_UNDEF;
 
-#line 1030 "analyze.c"
+
+#line 1265 "loadkeys.analyze.c"
 
 	if ( !(yy_init) )
 		{
@@ -1073,7 +1305,7 @@ YY_DECL
 yy_match:
 		do
 			{
-			register YY_CHAR yy_c = yy_ec[YY_SC_TO_UI(*yy_cp)];
+			register YY_CHAR yy_c = yy_ec[YY_SC_TO_UI(*yy_cp)] ;
 			if ( yy_accept[yy_current_state] )
 				{
 				(yy_last_accepting_state) = yy_current_state;
@@ -1114,44 +1346,66 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 79 "analyze.l"
-{BEGIN(INCLSTR);}
+#line 302 "loadkeys.analyze.l"
+{
+				yy_push_state(INCLSTR);
+				state_ptr++;
+			}
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 80 "analyze.l"
-{ int l; char *s;
-			 l = strlen(yytext);
-			 s = xmalloc(l);
-			 strcpy(s, yytext+1);
-			 s[l-2] = 0;		/* wipe out " */
-			 open_include(s);
-			 BEGIN(0);
+#line 306 "loadkeys.analyze.l"
+{
+				char *s = xstrndup(yytext+1, strlen(yytext)-2);
+				/* use static pathname to store *s ? */
+				open_include(s);
+				yy_pop_state();
+				state_ptr--;
 			}
 	YY_BREAK
 case 3:
 /* rule 3 can match eol */
 YY_RULE_SETUP
-#line 88 "analyze.l"
+#line 313 "loadkeys.analyze.l"
 {
-			  yyerror("expected filename between quotes");
-			  BEGIN(0); }
+				yyerror(_("expected filename between quotes"));
+			}
+	YY_BREAK
+case YY_STATE_EOF(INITIAL):
+case YY_STATE_EOF(RVALUE):
+case YY_STATE_EOF(STR):
+case YY_STATE_EOF(INCLSTR):
+#line 316 "loadkeys.analyze.l"
+{
+				stack_pop();
+				if (!YY_CURRENT_BUFFER)
+					yyterminate();
+			}
 	YY_BREAK
 case 4:
 /* rule 4 can match eol */
 YY_RULE_SETUP
-#line 91 "analyze.l"
-{line_nr++;}
+#line 321 "loadkeys.analyze.l"
+{
+				line_nr++;
+			}
 	YY_BREAK
 case 5:
 /* rule 5 can match eol */
 YY_RULE_SETUP
-#line 92 "analyze.l"
-{line_nr++;BEGIN(0);return(EOL);}
+#line 324 "loadkeys.analyze.l"
+{
+				line_nr++;
+				if (state_ptr > 0) {
+					yy_pop_state();
+					state_ptr--;
+				}
+				return(EOL);
+			}
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 93 "analyze.l"
+#line 332 "loadkeys.analyze.l"
 ; /* do nothing */
 	YY_BREAK
 case 7:
@@ -1160,224 +1414,280 @@ case 7:
 (yy_c_buf_p) = yy_cp -= 1;
 YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 94 "analyze.l"
+#line 333 "loadkeys.analyze.l"
 ; /* do nothing */
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 95 "analyze.l"
-{BEGIN(RVALUE);rvalct=0;return(EQUALS);}
+#line 334 "loadkeys.analyze.l"
+{
+				yy_push_state(RVALUE);
+				state_ptr++;
+				rvalct = 0;
+				return(EQUALS);
+			}
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 96 "analyze.l"
-{return(DASH);}
+#line 340 "loadkeys.analyze.l"
+{
+				yy_push_state(RVALUE);
+				state_ptr++;
+				return(STRING);
+			}
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 97 "analyze.l"
-{return(COMMA);}
+#line 345 "loadkeys.analyze.l"
+{
+				yy_push_state(RVALUE);
+				state_ptr++;
+				return(TO);
+			}
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 98 "analyze.l"
-{return(PLUS);}
+#line 350 "loadkeys.analyze.l"
+{
+				yylval = strtol(yytext + 1, NULL, 16);
+				if (yylval >= 0xf000)
+					lkfatal(_("unicode keysym out of range: %s"), yytext);
+				return(UNUMBER);
+			}
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 99 "analyze.l"
-{yylval=strtol(yytext+1,NULL,16);if(yylval>=0xf000)lkfatal1("unicode keysym out of range: %s",yytext);return(UNUMBER);}
+#line 356 "loadkeys.analyze.l"
+{
+				yylval = strtol(yytext, NULL, 0);
+				return(NUMBER);
+			}
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 100 "analyze.l"
-{yylval=strtol(yytext,NULL,0);return(NUMBER);}
+#line 360 "loadkeys.analyze.l"
+{	return((yylval = ksymtocode(yytext, TO_AUTO)) == -1 ? ERROR : LITERAL);	}
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 101 "analyze.l"
-{return((yylval=ksymtocode(yytext, TO_AUTO))==-1?ERROR:LITERAL);}
+#line 361 "loadkeys.analyze.l"
+{	return(DASH);		}
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 102 "analyze.l"
-{return(CHARSET);}
+#line 362 "loadkeys.analyze.l"
+{	return(COMMA);		}
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 103 "analyze.l"
-{return(KEYMAPS);}
+#line 363 "loadkeys.analyze.l"
+{	return(PLUS);		}
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 104 "analyze.l"
-{return(KEYCODE);}
+#line 364 "loadkeys.analyze.l"
+{	return(CHARSET);	}
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 105 "analyze.l"
-{BEGIN(RVALUE);return(STRING);}
+#line 365 "loadkeys.analyze.l"
+{	return(KEYMAPS);	}
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 106 "analyze.l"
-{return(PLAIN);}
+#line 366 "loadkeys.analyze.l"
+{	return(KEYCODE);	}
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 107 "analyze.l"
-{return(SHIFT);}
+#line 367 "loadkeys.analyze.l"
+{	return(PLAIN);		}
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 108 "analyze.l"
-{return(CONTROL);}
+#line 368 "loadkeys.analyze.l"
+{	return(SHIFT);		}
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 109 "analyze.l"
-{return(ALT);}
+#line 369 "loadkeys.analyze.l"
+{	return(CONTROL);	}
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 110 "analyze.l"
-{return(ALTGR);}
+#line 370 "loadkeys.analyze.l"
+{	return(ALT);		}
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 111 "analyze.l"
-{return(SHIFTL);}
+#line 371 "loadkeys.analyze.l"
+{	return(ALTGR);		}
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 112 "analyze.l"
-{return(SHIFTR);}
+#line 372 "loadkeys.analyze.l"
+{	return(SHIFTL);		}
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 113 "analyze.l"
-{return(CTRLL);}
+#line 373 "loadkeys.analyze.l"
+{	return(SHIFTR);		}
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 114 "analyze.l"
-{return(CTRLR);}
+#line 374 "loadkeys.analyze.l"
+{	return(CTRLL);		}
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 115 "analyze.l"
-{return(CAPSSHIFT);}
+#line 375 "loadkeys.analyze.l"
+{	return(CTRLR);		}
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
-#line 116 "analyze.l"
-{return(ALT_IS_META);}
+#line 376 "loadkeys.analyze.l"
+{	return(CAPSSHIFT);	}
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
-#line 117 "analyze.l"
-{return(STRINGS);}
+#line 377 "loadkeys.analyze.l"
+{	return(ALT_IS_META);	}
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
-#line 118 "analyze.l"
-{return(COMPOSE);}
+#line 378 "loadkeys.analyze.l"
+{	return(STRINGS);	}
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
-#line 119 "analyze.l"
-{return(AS);}
+#line 379 "loadkeys.analyze.l"
+{	return(COMPOSE);	}
 	YY_BREAK
 case 33:
 YY_RULE_SETUP
-#line 120 "analyze.l"
-{return(USUAL);}
+#line 380 "loadkeys.analyze.l"
+{	return(AS);		}
 	YY_BREAK
 case 34:
 YY_RULE_SETUP
-#line 121 "analyze.l"
-{BEGIN(RVALUE); return(TO);}
+#line 381 "loadkeys.analyze.l"
+{	return(USUAL);		}
 	YY_BREAK
 case 35:
 YY_RULE_SETUP
-#line 122 "analyze.l"
-{return(ON);}
+#line 382 "loadkeys.analyze.l"
+{	return(ON);		}
 	YY_BREAK
 case 36:
 YY_RULE_SETUP
-#line 123 "analyze.l"
-{return(FOR);}
+#line 383 "loadkeys.analyze.l"
+{	return(FOR);		}
 	YY_BREAK
 case 37:
 YY_RULE_SETUP
-#line 124 "analyze.l"
-{yylval = strtol(yytext+2,NULL,8); return(CCHAR);}
+#line 384 "loadkeys.analyze.l"
+{
+				yylval = strtol(yytext + 2, NULL, 8);
+				return(CCHAR);
+			}
 	YY_BREAK
 case 38:
 YY_RULE_SETUP
-#line 125 "analyze.l"
-{yylval = (unsigned char) yytext[2]; return(CCHAR);}
+#line 388 "loadkeys.analyze.l"
+{
+				yylval = (unsigned char) yytext[2];
+				return(CCHAR);
+			}
 	YY_BREAK
 case 39:
 YY_RULE_SETUP
-#line 126 "analyze.l"
-{yylval = (unsigned char) yytext[1]; return(CCHAR);}
+#line 392 "loadkeys.analyze.l"
+{
+				yylval = (unsigned char) yytext[1];
+				return(CCHAR);
+			}
 	YY_BREAK
 case 40:
 YY_RULE_SETUP
-#line 127 "analyze.l"
-{p=(char *) kbs_buf.kb_string;
-				pmax=p+sizeof(kbs_buf.kb_string)-1;
-				BEGIN(STR);}
+#line 396 "loadkeys.analyze.l"
+{
+				p = (char *) kbs_buf.kb_string;
+				pmax = p + sizeof(kbs_buf.kb_string) - 1;
+				yy_push_state(STR);
+				state_ptr++;
+			}
 	YY_BREAK
 case 41:
 YY_RULE_SETUP
-#line 130 "analyze.l"
-{if(p>=pmax)stringovfl();*p++=strtol(yytext+1,NULL,8);}
+#line 402 "loadkeys.analyze.l"
+{
+				if (p >= pmax)
+					lkfatal(_("string too long"));
+				*p++ = strtol(yytext + 1, NULL, 8);
+			}
 	YY_BREAK
 case 42:
 YY_RULE_SETUP
-#line 131 "analyze.l"
-{if(p>=pmax)stringovfl();*p++='"';}
+#line 407 "loadkeys.analyze.l"
+{
+				if (p >= pmax)
+					lkfatal(_("string too long"));
+				*p++ = '"';
+			}
 	YY_BREAK
 case 43:
 YY_RULE_SETUP
-#line 132 "analyze.l"
-{if(p>=pmax)stringovfl();*p++='\\';}
+#line 412 "loadkeys.analyze.l"
+{
+				if (p >= pmax)
+					lkfatal(_("string too long"));
+				*p++ = '\\';
+			}
 	YY_BREAK
 case 44:
 YY_RULE_SETUP
-#line 133 "analyze.l"
-{if(p>=pmax)stringovfl();*p++='\n';}
+#line 417 "loadkeys.analyze.l"
+{
+				if (p >= pmax)
+					lkfatal(_("string too long"));
+				*p++ = '\n';
+			}
 	YY_BREAK
 case 45:
 /* rule 45 can match eol */
 YY_RULE_SETUP
-#line 134 "analyze.l"
-{char *ptmp=p;p+=strlen(yytext);
-				if(p>pmax)stringovfl();strcpy(ptmp,yytext);}
+#line 422 "loadkeys.analyze.l"
+{
+				char *ptmp = p;
+				p += strlen(yytext);
+				if (p > pmax)
+					lkfatal(_("string too long"));
+				strcpy(ptmp, yytext);
+			}
 	YY_BREAK
 case 46:
 YY_RULE_SETUP
-#line 136 "analyze.l"
-{*p='\0';BEGIN(0);return(STRLITERAL);}
+#line 429 "loadkeys.analyze.l"
+{
+				*p = '\0';
+				yy_pop_state();
+				state_ptr--;
+				return(STRLITERAL);
+			}
 	YY_BREAK
 case 47:
 YY_RULE_SETUP
-#line 137 "analyze.l"
-{return(ERROR); /* report any unknown characters */}
+#line 435 "loadkeys.analyze.l"
+{
+				return(ERROR); /* report any unknown characters */
+			}
 	YY_BREAK
 case 48:
 YY_RULE_SETUP
-#line 138 "analyze.l"
+#line 438 "loadkeys.analyze.l"
 ECHO;
 	YY_BREAK
-#line 1373 "analyze.c"
-case YY_STATE_EOF(INITIAL):
-case YY_STATE_EOF(RVALUE):
-case YY_STATE_EOF(STR):
-case YY_STATE_EOF(INCLSTR):
-	yyterminate();
+#line 1691 "loadkeys.analyze.c"
 
 	case YY_END_OF_BUFFER:
 		{
@@ -1561,21 +1871,21 @@ static int yy_get_next_buffer (void)
 
 	else
 		{
-			int num_to_read =
+			yy_size_t num_to_read =
 			YY_CURRENT_BUFFER_LVALUE->yy_buf_size - number_to_move - 1;
 
 		while ( num_to_read <= 0 )
 			{ /* Not enough room in the buffer - grow it. */
 
 			/* just a shorter name for the current buffer */
-			YY_BUFFER_STATE b = YY_CURRENT_BUFFER;
+			YY_BUFFER_STATE b = YY_CURRENT_BUFFER_LVALUE;
 
 			int yy_c_buf_p_offset =
 				(int) ((yy_c_buf_p) - b->yy_ch_buf);
 
 			if ( b->yy_is_our_buffer )
 				{
-				int new_size = b->yy_buf_size * 2;
+				yy_size_t new_size = b->yy_buf_size * 2;
 
 				if ( new_size <= 0 )
 					b->yy_buf_size += b->yy_buf_size / 8;
@@ -1606,7 +1916,7 @@ static int yy_get_next_buffer (void)
 
 		/* Read in more data. */
 		YY_INPUT( (&YY_CURRENT_BUFFER_LVALUE->yy_ch_buf[number_to_move]),
-			(yy_n_chars), (size_t) num_to_read );
+			(yy_n_chars), num_to_read );
 
 		YY_CURRENT_BUFFER_LVALUE->yy_n_chars = (yy_n_chars);
 		}
@@ -1701,7 +2011,7 @@ static int yy_get_next_buffer (void)
 	yy_current_state = yy_nxt[yy_base[yy_current_state] + (unsigned int) yy_c];
 	yy_is_jam = (yy_current_state == 503);
 
-	return yy_is_jam ? 0 : yy_current_state;
+		return yy_is_jam ? 0 : yy_current_state;
 }
 
 #ifndef YY_NO_INPUT
@@ -1728,7 +2038,7 @@ static int yy_get_next_buffer (void)
 
 		else
 			{ /* need more input */
-			int offset = (yy_c_buf_p) - (yytext_ptr);
+			yy_size_t offset = (yy_c_buf_p) - (yytext_ptr);
 			++(yy_c_buf_p);
 
 			switch ( yy_get_next_buffer(  ) )
@@ -1888,10 +2198,6 @@ static void yy_load_buffer_state  (void)
 	yyfree((void *) b  );
 }
 
-#ifndef __cplusplus
-extern int isatty (int );
-#endif /* __cplusplus */
-    
 /* Initializes or reinitializes a buffer.
  * This function is sometimes called more than once on the same buffer,
  * such as during a yyrestart() or at EOF.
@@ -2004,7 +2310,7 @@ void yypop_buffer_state (void)
  */
 static void yyensure_buffer_stack (void)
 {
-	int num_to_alloc;
+	yy_size_t num_to_alloc;
     
 	if (!(yy_buffer_stack)) {
 
@@ -2101,12 +2407,12 @@ YY_BUFFER_STATE yy_scan_string (yyconst char * yystr )
  * 
  * @return the newly allocated buffer state object.
  */
-YY_BUFFER_STATE yy_scan_bytes  (yyconst char * yybytes, int  _yybytes_len )
+YY_BUFFER_STATE yy_scan_bytes  (yyconst char * yybytes, yy_size_t  _yybytes_len )
 {
 	YY_BUFFER_STATE b;
 	char *buf;
 	yy_size_t n;
-	int i;
+	yy_size_t i;
     
 	/* Get memory for full buffer, including space for trailing EOB's. */
 	n = _yybytes_len + 2;
@@ -2131,13 +2437,45 @@ YY_BUFFER_STATE yy_scan_bytes  (yyconst char * yybytes, int  _yybytes_len )
 	return b;
 }
 
+    static void yy_push_state (int  new_state )
+{
+    	if ( (yy_start_stack_ptr) >= (yy_start_stack_depth) )
+		{
+		yy_size_t new_size;
+
+		(yy_start_stack_depth) += YY_START_STACK_INCR;
+		new_size = (yy_start_stack_depth) * sizeof( int );
+
+		if ( ! (yy_start_stack) )
+			(yy_start_stack) = (int *) yyalloc(new_size  );
+
+		else
+			(yy_start_stack) = (int *) yyrealloc((void *) (yy_start_stack),new_size  );
+
+		if ( ! (yy_start_stack) )
+			YY_FATAL_ERROR( "out of memory expanding start-condition stack" );
+		}
+
+	(yy_start_stack)[(yy_start_stack_ptr)++] = YY_START;
+
+	BEGIN(new_state);
+}
+
+    static void yy_pop_state  (void)
+{
+    	if ( --(yy_start_stack_ptr) < 0 )
+		YY_FATAL_ERROR( "start-condition stack underflow" );
+
+	BEGIN((yy_start_stack)[(yy_start_stack_ptr)]);
+}
+
 #ifndef YY_EXIT_FAILURE
 #define YY_EXIT_FAILURE 2
 #endif
 
-static void attr_noreturn yy_fatal_error (yyconst char* msg )
+static void yy_fatal_error (yyconst char* msg  YY_ATTRIBUTE_UNUSED)
 {
-    	(void) fprintf( stderr, "%s\n", msg );
+	(void) fprintf( stderr, "%s\n", msg );
 	exit( YY_EXIT_FAILURE );
 }
 
@@ -2188,7 +2526,7 @@ FILE *yyget_out  (void)
 /** Get the length of the current token.
  * 
  */
-int yyget_leng  (void)
+yy_size_t yyget_leng  (void)
 {
         return yyleng;
 }
@@ -2251,6 +2589,10 @@ static int yy_init_globals (void)
     (yy_init) = 0;
     (yy_start) = 0;
 
+    (yy_start_stack_ptr) = 0;
+    (yy_start_stack_depth) = 0;
+    (yy_start_stack) =  NULL;
+
 /* Defined in main.c */
 #ifdef YY_STDINIT
     yyin = stdin;
@@ -2281,6 +2623,10 @@ int yylex_destroy  (void)
 	yyfree((yy_buffer_stack) );
 	(yy_buffer_stack) = NULL;
 
+    /* Destroy the start condition stack. */
+        yyfree((yy_start_stack)  );
+        (yy_start_stack) = NULL;
+
     /* Reset the globals. This is important in a non-reentrant scanner so the next time
      * yylex() is called, initialization will occur. */
     yy_init_globals( );
@@ -2293,7 +2639,7 @@ int yylex_destroy  (void)
  */
 
 #ifndef yytext_ptr
-static void yy_flex_strncpy (char* s1, yyconst char * s2, int n )
+static void yy_flex_strncpy (char* s1, yyconst char * s2, int n  YY_ATTRIBUTE_UNUSED)
 {
 	register int i;
 	for ( i = 0; i < n; ++i )
@@ -2302,7 +2648,7 @@ static void yy_flex_strncpy (char* s1, yyconst char * s2, int n )
 #endif
 
 #ifdef YY_NEED_STRLEN
-static int yy_flex_strlen (yyconst char * s )
+static int yy_flex_strlen (yyconst char * s  YY_ATTRIBUTE_UNUSED)
 {
 	register int n;
 	for ( n = 0; s[n]; ++n )
@@ -2312,12 +2658,12 @@ static int yy_flex_strlen (yyconst char * s )
 }
 #endif
 
-void *yyalloc (yy_size_t  size )
+void *yyalloc (yy_size_t  size  YY_ATTRIBUTE_UNUSED)
 {
 	return (void *) malloc( size );
 }
 
-void *yyrealloc  (void * ptr, yy_size_t  size )
+void *yyrealloc  (void * ptr, yy_size_t  size  YY_ATTRIBUTE_UNUSED)
 {
 	/* The cast to (char *) in the following accommodates both
 	 * implementations that use char* generic pointers, and those
@@ -2329,21 +2675,14 @@ void *yyrealloc  (void * ptr, yy_size_t  size )
 	return (void *) realloc( (char *) ptr, size );
 }
 
-void yyfree (void * ptr )
+void yyfree (void * ptr  YY_ATTRIBUTE_UNUSED)
 {
 	free( (char *) ptr );	/* see yyrealloc() for (char *) cast */
 }
 
 #define YYTABLES_NAME "yytables"
 
-#line 138 "analyze.l"
+#line 438 "loadkeys.analyze.l"
 
 
-#include "ksyms.h"
-#include <linux/keyboard.h>
-
-void attr_noreturn
-stringovfl(void) {
-	lkfatal("string too long");
-}
 

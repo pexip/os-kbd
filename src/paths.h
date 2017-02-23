@@ -18,16 +18,15 @@
  * Default keymap, and where the kernel copy of it lives.
  */
 #ifdef __sparc__
-# define DEFMAP "sunkeymap.kmap"
+# define DEFMAP "sunkeymap.map"
 # define KERNDIR "/usr/src/linux/drivers/sbus/char"
 #else
-# define DEFMAP "defkeymap.kmap"
-# define KERNDIR "/usr/src/linux/drivers/char"
+# define DEFMAP "defkeymap.map"
+# define KERNDIR "/usr/src/linux/drivers/tty/vt"
 #endif
 
-extern FILE *findfile(char *fnam, char **dirpath, char **suffixes);
+#include "findfile.h"
 extern char pathname[];
-extern void fpclose(FILE *fp);
 
 extern int verbose;
 extern int debug;
