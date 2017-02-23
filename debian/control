@@ -9,7 +9,7 @@ Build-Depends: debhelper (>= 8.1.0), autoconf, automake, linuxdoc-tools, gettext
 Standards-Version: 3.9.2
 Vcs-Git: git://git.debian.org/git/pkg-kbd/kbd.git
 Vcs-Browser: http://git.debian.org/?p=pkg-kbd/kbd.git
-XS-Pexip-Upstream: http://archive.ubuntu.com/ubuntu/ precise
+XS-Pexip-Upstream: http://ftp.debian.org/debian/ jessie
 
 Package: kbd
 Architecture: any
