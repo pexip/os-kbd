@@ -14,7 +14,7 @@ CONTRIB_BINARIES = codepage splitfont vcstime
 
 # we don’t want these in /usr/bin
 MOVE_TO_BIN = kbd_mode setfont fgconsole openvt chvt dumpkeys unicode_start loadkeys
-MOVE_TO_SBIN = kbdrate
+MOVE_TO_SBIN = kbdrate setvtrgb
 MOVE_TO_USR_SBIN = vcstime setvesablank
 
 DEB_BUILD_GNU_TYPE := $(shell dpkg-architecture -qDEB_BUILD_GNU_TYPE)
