@@ -13,8 +13,7 @@ XS-Pexip-Upstream: http://ftp.debian.org/debian/ jessie
 
 Package: kbd
 Architecture: linux-any
-Depends: ${shlibs:Depends}, ${misc:Depends}, lsb-base (>= 3.0-10)
-Recommends: console-setup | console-data
+Depends: ${shlibs:Depends}, ${misc:Depends}, console-setup, lsb-base (>= 3.0-10)
 Provides: console-utilities
 Conflicts: console-utilities
 Description: Linux console font and keytable utilities
@@ -22,7 +21,7 @@ Description: Linux console font and keytable utilities
  resize text mode virtual consoles and remap the keyboard.
  .
  You will probably want to install a set of data files, such as the one
- in the “console-data” package.
+ in the “console-setup” package.
 
 Package: kbd-udeb
 Package-Type: udeb
