@@ -61,6 +61,8 @@ override_dh_auto_install:
 	mv $(addprefix debian/kbd/usr/bin/,$(MOVE_TO_USR_SBIN)) $(KBD)/usr/sbin/
 # configuration files
 	install -m644 debian/conffiles.d/* $(KBD)/etc/kbd/
+# initramfs
+	install -m 755 debian/kbd.initramfs-hook $(KBD)/usr/share/initramfs-tools/hooks/kbd
 # prepare udeb
 	for ITEM in $(UDEB_BINARIES); do install -m755 src/$$ITEM-udeb $(KBD_UDEB)/bin/$$ITEM; done
 

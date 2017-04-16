@@ -3,3 +3,4 @@ etc/kbd
 sbin
 usr/bin
 usr/sbin
+usr/share/initramfs-tools/hooks

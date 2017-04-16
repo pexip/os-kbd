@@ -5,6 +5,8 @@ kbd (1.15.5-2pexip1) pexip; urgency=low
     - debian/control: Depend on console-setup
     - debian/kbd.dirs, debian/kbd.init: Remove init script
     - debian/rules: Move setvtrgb to /sbin
+    - debian/{kbd.dirs, kbd.initramfs-hook, rules}:
+      Add setfont, kbd_mode, and loadkeys to the initramfs
   * debian/kbd.preinst: Remove: not needed
 
  -- John-Mark Bell <jmb@pexip.com>  Thu, 23 Feb 2017 20:34:11 +0000
